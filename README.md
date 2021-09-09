@@ -1,7 +1,7 @@
 <h1 align="center"> Timer </h1> <br>
 
 <p align="center">
-  <a href="https://github.com/Vishesht27/Timer">
+  <a href="https://github.com/DSCVITBHOPAL/Timer">
     <img alt="Timer" title="Timer" src="https://cdn0.iconfinder.com/data/icons/ios7-essence/22/stopwatch_timer_clock_time-512.png" width="150">
   </a>
 </p>
@@ -44,7 +44,7 @@
 * **Clone** the project:
 
 ```
-
+git clone https://github.com/DSCVITBHOPAL/Timer
 ```
 * Setup **Android Studio** and open the project.
 
