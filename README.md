@@ -19,7 +19,6 @@
 - [Feedback](#feedback)
 
 
-
 ## Introduction
 
 ### Tech Stack used :
@@ -47,6 +46,18 @@
 git clone https://github.com/DSCVITBHOPAL/Timer
 ```
 * Setup **Android Studio** and open the project.
+
+
+## Points System in Contribution💻
+We decided to come up with a point system for all of our repositories under GDSC, VIT Bhopal and here's how it looks.
+
+| Levels        | Task                                               | Points            |
+| :---          |     :---:                                          |          ---:     |
+| Level 0       | Additons to Readme Files                           | 2                 |
+| Level 1       | First-time contributors Issues                     | 5                 |
+| Level 2       | Intermediate Issues including backend              | 10                |
+
+
 
 ## Feedback
 
