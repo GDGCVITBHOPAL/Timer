@@ -16,6 +16,7 @@
 
 - [Introduction](#introduction)
 - [Build Process](#build-process)
+- [Contributing Guidlines](#Contributing-Guidelines)
 - [Feedback](#feedback)
 
 
@@ -47,15 +48,22 @@ git clone https://github.com/DSCVITBHOPAL/Timer
 ```
 * Setup **Android Studio** and open the project.
 
+## Contributing Guidelines📕
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b <github-username>`)
+3. Commit your Changes (`git commit -m 'Project Name-guthub-username'`)
+4. Push to the Branch (`git push origin <branch-name>`)
+5. Open a Pull Request
+6. Star the Repo(Really helps with discoverability)
 
 ## Points System in Contribution💻
 We decided to come up with a point system for all of our repositories under GDSC, VIT Bhopal and here's how it looks.
 
 | Levels        | Task                                               | Points            |
 | :---          |     :---:                                          |          ---:     |
-| Level 0       | Additons to Readme Files                           | 2                 |
+| Level 0       | Additons to Readme Files & Documentations          | 2                 |
 | Level 1       | First-time contributors Issues                     | 5                 |
-| Level 2       | Intermediate Issues including backend              | 10                |
+| Level 2       | Intermediate Issues including backend & Frontend   | 10                |
 
 
 
