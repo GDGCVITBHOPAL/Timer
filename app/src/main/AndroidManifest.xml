@@ -11,6 +11,9 @@
         android:theme="@style/Theme.Timer">
         <activity
             android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity2"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Timer.NoActionBar">
