@@ -144,7 +144,7 @@ fun Timer(
             )
         ) {
             Text(
-                text = if (isTimerRunning && currentTime >= 0L) "Stop"
+                text = if (isTimerRunning && currentTime > 0L) "Stop"
                 else if (!isTimerRunning && currentTime >= 0L) "Start"
                 else "Restart"
             )
