@@ -151,3 +151,24 @@ fun Timer(
         }
     }
 }
+
+@Preview("Main Screen")
+@Composable
+fun preview_Timer(){
+    Surface(
+        color = Color(0xFF101010),
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            Timer(
+                totalTime = 100L * 1000L,
+                handleColor = Color.Green,
+                inactiveBarColor = Color.DarkGray,
+                activeBarColor = Color(0xFF37B900),
+                modifier = Modifier.size(200.dp)
+            )
+        }
+    }
+}
