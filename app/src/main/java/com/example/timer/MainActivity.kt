@@ -3,6 +3,9 @@ package com.example.timer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -11,16 +14,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Stop
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PointMode
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onSizeChanged
@@ -30,31 +30,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.timer.ui.theme.background1
+import com.example.timer.ui.theme.ring1
 import kotlinx.coroutines.delay
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(
-                color = Color(0xFF101010),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Timer(
-                        totalTime = 100L * 1000L,
-                        handleColor = Color.Green,
-                        inactiveBarColor = Color.DarkGray,
-                        activeBarColor = Color(0xFF37B900),
-                        modifier = Modifier.size(250.dp)
-                    )
-                }
-            }
+            Main_Content()
         }
     }
 }
@@ -62,7 +47,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Timer(
     totalTime: Long,
-    handleColor: Color,
     inactiveBarColor: Color,
     activeBarColor: Color,
     modifier: Modifier = Modifier,
@@ -75,14 +59,14 @@ fun Timer(
     var value by remember {
         mutableStateOf(initialValue)
     }
-    var currentTime by rememberSaveable{
+    var currentTime by rememberSaveable {
         mutableStateOf(totalTime)
     }
     var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
-        if(currentTime > 0 && isTimerRunning) {
+        if (currentTime > 0 && isTimerRunning) {
             delay(100L)
             currentTime -= 100L
             value = currentTime / totalTime.toFloat()
@@ -124,31 +108,38 @@ fun Timer(
         Button(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(40.dp),
+                .padding(top = 140.dp)
+                .size(80.dp),
             onClick = {
-                if(currentTime <= 0L) {
+                if (currentTime <= 0L) {
                     currentTime = totalTime
                     isTimerRunning = true
                 } else {
                     isTimerRunning = !isTimerRunning
                 }
             },
-            shape = CircleShape,
+            contentPadding = PaddingValues(0.dp),
+
+            shape = if (isTimerRunning && currentTime > 0L) RectangleShape
+            else if (!isTimerRunning && currentTime >= 0L) CircleShape
+            else CircleShape,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                    Color.Green
+                    Color(0xFF7cb342)
                 } else {
-                    Color.Red
+                    Color(0xFFfdd835)
                 }
             )
         ) {
             Icon(
-                imageVector = if (isTimerRunning && currentTime > 0L) Icons.Filled.Pause
-                else if (!isTimerRunning && currentTime >= 0L) Icons.Filled.PlayArrow
-                else Icons.Filled.Refresh,
+                tint = background1,
+                modifier = Modifier.size(50.dp),
                 contentDescription = if (isTimerRunning && currentTime > 0L) "Pause"
                 else if (!isTimerRunning && currentTime >= 0L) "Play"
-                else "Restart"
+                else "Restart",
+                imageVector = if (isTimerRunning && currentTime > 0L) Icons.Filled.Pause
+                else if (!isTimerRunning && currentTime >= 0L) Icons.Filled.PlayArrow
+                else Icons.Filled.Refresh
             )
         }
 
@@ -156,11 +147,10 @@ fun Timer(
 
 }
 
-@Preview("Main Screen")
 @Composable
-fun preview_Timer(){
+fun Main_Content() {
     Surface(
-        color = Color(0xFF101010),
+        color = background1,
         modifier = Modifier.fillMaxSize()
     ) {
         Box(
@@ -168,11 +158,17 @@ fun preview_Timer(){
         ) {
             Timer(
                 totalTime = 100L * 1000L,
-                handleColor = Color.Green,
                 inactiveBarColor = Color.DarkGray,
-                activeBarColor = Color(0xFFFF4C29),
-                modifier = Modifier.size(250.dp)
+                activeBarColor = ring1,
+                modifier = Modifier.size(300.dp),
+                strokeWidth = 10.dp
             )
         }
     }
+}
+
+@Preview("Main Screen")
+@Composable
+fun preview_Timer() {
+    Main_Content()
 }
