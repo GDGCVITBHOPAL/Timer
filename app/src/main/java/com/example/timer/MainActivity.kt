@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                         handleColor = Color.Green,
                         inactiveBarColor = Color.DarkGray,
                         activeBarColor = Color(0xFF37B900),
-                        modifier = Modifier.size(200.dp)
+                        modifier = Modifier.size(250.dp)
                     )
                 }
             }
@@ -61,7 +62,7 @@ fun Timer(
     activeBarColor: Color,
     modifier: Modifier = Modifier,
     initialValue: Float = 1f,
-    strokeWidth: Dp = 5.dp
+    strokeWidth: Dp = 8.dp
 ) {
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -69,10 +70,10 @@ fun Timer(
     var value by remember {
         mutableStateOf(initialValue)
     }
-    var currentTime by remember {
+    var currentTime by rememberSaveable{
         mutableStateOf(totalTime)
     }
-    var isTimerRunning by remember {
+    var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -92,31 +93,19 @@ fun Timer(
         Canvas(modifier = modifier) {
             drawArc(
                 color = inactiveBarColor,
-                startAngle = -215f,
-                sweepAngle = 250f,
+                startAngle = 360f,
+                sweepAngle = 360f,
                 useCenter = false,
                 size = Size(size.width.toFloat(), size.height.toFloat()),
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
             drawArc(
                 color = activeBarColor,
-                startAngle = -215f,
-                sweepAngle = 250f * value,
+                startAngle = 360f,
+                sweepAngle = 360f * value,
                 useCenter = false,
                 size = Size(size.width.toFloat(), size.height.toFloat()),
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
-            )
-            val center = Offset(size.width / 2f, size.height / 2f)
-            val beta = (250f * value + 145f) * (PI / 180f).toFloat()
-            val r = size.width / 2f
-            val a = cos(beta) * r
-            val b = sin(beta) * r
-            drawPoints(
-                listOf(Offset(center.x + a, center.y + b)),
-                pointMode = PointMode.Points,
-                color = handleColor,
-                strokeWidth = (strokeWidth * 3f).toPx(),
-                cap = StrokeCap.Round
             )
         }
         Text(
@@ -163,11 +152,11 @@ fun preview_Timer(){
             contentAlignment = Alignment.Center
         ) {
             Timer(
-                totalTime = 100L * 1000L,
+                totalTime = 10L * 1000L,
                 handleColor = Color.Green,
                 inactiveBarColor = Color.DarkGray,
-                activeBarColor = Color(0xFF37B900),
-                modifier = Modifier.size(200.dp)
+                activeBarColor = Color(0xFFFF4C29),
+                modifier = Modifier.size(250.dp)
             )
         }
     }
