@@ -10,3 +10,5 @@ val Teal200 = Color(0xFF03DAC5)
 
 val background1 = Color(0xFF334756)
 val ring1 = Color(0xFFFF4C29)
+val green = Color(0xFF7cb342)
+val yellow = Color(0xFFfdd835)

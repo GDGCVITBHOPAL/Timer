@@ -3,12 +3,14 @@ package com.example.timer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -31,7 +33,9 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.timer.ui.theme.background1
+import com.example.timer.ui.theme.green
 import com.example.timer.ui.theme.ring1
+import com.example.timer.ui.theme.yellow
 import kotlinx.coroutines.delay
 
 
@@ -42,6 +46,12 @@ class MainActivity : ComponentActivity() {
             Main_Content()
         }
     }
+}
+
+private enum class ButtonState(){
+    Play,
+    Pause,
+    Restart
 }
 
 @Composable
@@ -65,11 +75,36 @@ fun Timer(
     var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
+
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
         if (currentTime > 0 && isTimerRunning) {
             delay(100L)
             currentTime -= 100L
             value = currentTime / totalTime.toFloat()
+        }
+    }
+
+    // Animation state for button
+    var activeButton by rememberSaveable {
+        mutableStateOf(ButtonState.Play)
+    }
+    val buttonTransition = updateTransition(targetState = activeButton, label = "Button Animation")
+    val buttonColor by buttonTransition.animateColor(label = "Button Color") { state ->
+        when(state){
+            ButtonState.Pause -> yellow
+            else -> green
+        }
+    }
+    val buttonCornerDp by buttonTransition.animateDp(label = "Button Shape") { state ->
+        when(state){
+            ButtonState.Pause -> 20.dp
+            else -> 50.dp
+        }
+    }
+    val buttonWidthDp by buttonTransition.animateDp(label = "Button Width") { state ->
+        when(state){
+            ButtonState.Pause -> 140.dp
+            else -> 80.dp
         }
     }
     Column() {
@@ -105,11 +140,11 @@ fun Timer(
                 color = Color.White
             )
         }
+        Spacer(modifier = Modifier.height(140.dp))
         Button(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 140.dp)
-                .size(80.dp),
+                .size(height = 80.dp, width = buttonWidthDp),
             onClick = {
                 if (currentTime <= 0L) {
                     currentTime = totalTime
@@ -117,18 +152,15 @@ fun Timer(
                 } else {
                     isTimerRunning = !isTimerRunning
                 }
+                activeButton = if (isTimerRunning && currentTime > 0L) ButtonState.Pause
+                else if (!isTimerRunning && currentTime >= 0L) ButtonState.Play
+                else ButtonState.Restart
             },
             contentPadding = PaddingValues(0.dp),
 
-            shape = if (isTimerRunning && currentTime > 0L) RectangleShape
-            else if (!isTimerRunning && currentTime >= 0L) CircleShape
-            else CircleShape,
+            shape = RoundedCornerShape(buttonCornerDp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                    Color(0xFF7cb342)
-                } else {
-                    Color(0xFFfdd835)
-                }
+                backgroundColor = buttonColor
             )
         ) {
             Icon(
