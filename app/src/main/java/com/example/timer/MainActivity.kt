@@ -74,6 +74,9 @@ fun Timer(
     var value by remember {
         mutableStateOf(initialValue)
     }
+    val valueAnimation by animateFloatAsState(
+        targetValue = value,
+        animationSpec = tween(easing = LinearEasing))
     var currentTime by rememberSaveable {
         mutableStateOf(totalTime)
     }
@@ -133,7 +136,7 @@ fun Timer(
                 drawArc(
                     color = activeBarColor,
                     startAngle = -90f,
-                    sweepAngle = -360f * value,
+                    sweepAngle = -360f * valueAnimation,
                     useCenter = false,
                     size = Size(size.width.toFloat(), size.height.toFloat()),
                     style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
