@@ -1,6 +1,8 @@
 package com.example.timer
 
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.ASSERT
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColor
@@ -11,6 +13,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -26,6 +29,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -38,7 +43,7 @@ import com.example.timer.ui.theme.ring1
 import com.example.timer.ui.theme.yellow
 import kotlinx.coroutines.delay
 
-
+private const val Tag = "Main Activity"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +97,7 @@ fun Timer(
     val buttonColor by buttonTransition.animateColor(label = "Button Color") { state ->
         when(state){
             ButtonState.Pause -> yellow
+            ButtonState.Restart -> green
             else -> green
         }
     }
@@ -126,18 +132,21 @@ fun Timer(
                 )
                 drawArc(
                     color = activeBarColor,
-                    startAngle = 360f,
-                    sweepAngle = 360f * value,
+                    startAngle = -90f,
+                    sweepAngle = -360f * value,
                     useCenter = false,
                     size = Size(size.width.toFloat(), size.height.toFloat()),
                     style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
                 )
             }
-            Text(
-                text = (currentTime / 1000L).toString(),
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
+            ClickableText(
+                text = AnnotatedString((currentTime / 1000L).toString()),
+                onClick = { Log.wtf(Tag, "input") },
+                style = TextStyle(
+                    fontSize = 44.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
             )
         }
         Spacer(modifier = Modifier.height(140.dp))
@@ -153,8 +162,7 @@ fun Timer(
                     isTimerRunning = !isTimerRunning
                 }
                 activeButton = if (isTimerRunning && currentTime > 0L) ButtonState.Pause
-                else if (!isTimerRunning && currentTime >= 0L) ButtonState.Play
-                else ButtonState.Restart
+                else ButtonState.Play
             },
             contentPadding = PaddingValues(0.dp),
 
@@ -174,9 +182,7 @@ fun Timer(
                 else Icons.Filled.Refresh
             )
         }
-
     }
-
 }
 
 @Composable
@@ -189,7 +195,7 @@ fun Main_Content() {
             contentAlignment = Alignment.Center
         ) {
             Timer(
-                totalTime = 100L * 1000L,
+                totalTime = 15L * 1000L,
                 inactiveBarColor = Color.DarkGray,
                 activeBarColor = ring1,
                 modifier = Modifier.size(300.dp),
