@@ -84,14 +84,6 @@ fun Timer(
         mutableStateOf(false)
     }
 
-    LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
-        if (currentTime > 0 && isTimerRunning) {
-            delay(100L)
-            currentTime -= 100L
-            value = currentTime / totalTime.toFloat()
-        }
-    }
-
     // Animation state for button
     var activeButton by rememberSaveable {
         mutableStateOf(ButtonState.Play)
@@ -116,6 +108,17 @@ fun Timer(
             else -> 80.dp
         }
     }
+
+    LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
+        if (currentTime > 0 && isTimerRunning) {
+            delay(100L)
+            currentTime -= 100L
+            value = currentTime / totalTime.toFloat()
+        }
+        else activeButton = ButtonState.Restart
+    }
+
+
     Column() {
         Box(
             contentAlignment = Alignment.Center,
