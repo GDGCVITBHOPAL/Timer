@@ -1,9 +1,12 @@
 package com.example.timer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColor
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -47,12 +50,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-private enum class Screen() {
+private enum class Screen {
     Timer,
-    input
+    Input
 }
 
-private enum class ButtonState() {
+private enum class ButtonState {
     Play,
     Pause,
     Restart
@@ -60,7 +63,7 @@ private enum class ButtonState() {
 
 @Composable
 fun MyApp() {
-    var showInput by rememberSaveable { mutableStateOf(false) }
+    var currentScreen by rememberSaveable { mutableStateOf(Screen.Timer) }
     Surface(
         color = background1,
         modifier = Modifier.fillMaxSize()
@@ -68,10 +71,9 @@ fun MyApp() {
         Box(
             contentAlignment = Alignment.Center
         ) {
-            if (showInput) {
-                InputScreen(onInputClick = { showInput = !showInput })
-            } else TimerScreen(onInputClick = { showInput = !showInput })
-
+            if (currentScreen == Screen.Input) {
+                InputScreen(onInputClick = { currentScreen = Screen.Timer })
+            } else TimerScreen(onInputClick = { currentScreen = Screen.Input })
         }
 
     }
@@ -105,28 +107,56 @@ fun Timer(
         mutableStateOf(false)
     }
 
+
+
+
     // Animation state for button
     var activeButton by rememberSaveable {
         mutableStateOf(ButtonState.Play)
     }
     val buttonTransition = updateTransition(targetState = activeButton, label = "Button Animation")
-    val buttonColor by buttonTransition.animateColor(label = "Button Color") { state ->
+    val buttonColor by buttonTransition.animateColor(label = "Button Color",
+        transitionSpec = { tween(500)}) { state ->
         when (state) {
             ButtonState.Pause -> yellow
             ButtonState.Restart -> green
             else -> green
         }
     }
-    val buttonCornerDp by buttonTransition.animateDp(label = "Button Shape") { state ->
+    val buttonCornerDp by buttonTransition.animateDp(label = "Button Shape",
+        transitionSpec = { tween(500)}) { state ->
         when (state) {
             ButtonState.Pause -> 20.dp
             else -> 50.dp
         }
     }
-    val buttonWidthDp by buttonTransition.animateDp(label = "Button Width") { state ->
+    val buttonWidthDp by buttonTransition.animateDp(
+        label = "Button Width",
+    transitionSpec = { tween(500)}) { state ->
         when (state) {
             ButtonState.Pause -> 140.dp
             else -> 80.dp
+        }
+    }
+
+    val color = remember { Animatable(Color.Green) }
+    var colorChange by rememberSaveable {
+        mutableStateOf(false)
+    }
+    // animate to green/red based on `button click`
+    LaunchedEffect(colorChange) {
+        if (currentTime > 0) {
+            color.animateTo(
+                if (isTimerRunning) Color.Red else color.value,
+                animationSpec = tween(
+                    durationMillis = totalTime.toInt()
+                )
+            )
+        }
+        else{
+            Log.wtf(Tag, "In else = ${color.value}")
+            color.animateTo(Color.Green, animationSpec = tween(1000))
+            Log.wtf(Tag, "In else = ${color.value}")
         }
     }
 
@@ -135,11 +165,14 @@ fun Timer(
             delay(100L)
             currentTime -= 100L
             value = currentTime / totalTime.toFloat()
-        } else activeButton = ButtonState.Restart
+        } else {
+            colorChange = !colorChange
+            activeButton = ButtonState.Restart
+        }
     }
 
 
-    Column() {
+    Column {
         Box(
             contentAlignment = Alignment.Center,
             modifier = modifier
@@ -157,7 +190,7 @@ fun Timer(
                     style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
                 )
                 drawArc(
-                    color = activeBarColor,
+                    color = color.value,
                     startAngle = -90f,
                     sweepAngle = -360f * valueAnimation,
                     useCenter = false,
@@ -184,11 +217,16 @@ fun Timer(
                 if (currentTime <= 0L) {
                     currentTime = totalTime
                     isTimerRunning = true
+                    colorChange = true
+
                 } else {
                     isTimerRunning = !isTimerRunning
+                    colorChange = !colorChange
+
                 }
                 activeButton = if (isTimerRunning && currentTime > 0L) ButtonState.Pause
                 else ButtonState.Play
+
             },
             contentPadding = PaddingValues(0.dp),
 
@@ -216,7 +254,7 @@ fun Timer(
 fun TimerScreen(onInputClick: () -> Unit) {
     Timer(
         onInputClick = onInputClick,
-        totalTime = 15L * 1000L,
+        totalTime = 10L * 1000L,
         inactiveBarColor = Color.DarkGray,
         activeBarColor = ring1,
         modifier = Modifier.size(300.dp),
@@ -241,20 +279,19 @@ fun InputScreen(onInputClick: () -> Unit) {
             Text(text = "Back")
         }
     }
-
 }
-
+/*
 
 @Preview("Input Screen")
 @Composable
-fun preview_Input() {
-    InputScreen(onInputClick = {})
+fun Preview_Input() {
+    InputScreen(onInputClick = {  })
 }
 
-/*
+*/
 
 @Preview("Main Screen")
 @Composable
-fun preview_Timer() {
-    TimerScreen()
-}*/
+fun Preview_Timer() {
+    TimerScreen(onInputClick = {  })
+}
