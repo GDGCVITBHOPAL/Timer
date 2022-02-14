@@ -1,12 +1,10 @@
 package com.example.timer
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -29,18 +27,12 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.timer.ui.theme.background1
-import com.example.timer.ui.theme.green
-import com.example.timer.ui.theme.ring1
-import com.example.timer.ui.theme.yellow
+import com.example.timer.ui.theme.*
 import kotlinx.coroutines.delay
-
-private const val Tag = "Main Activity"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +77,6 @@ fun Timer(
     onInputClick: () -> Unit,
     totalTime: Long,
     inactiveBarColor: Color,
-    activeBarColor: Color,
     modifier: Modifier = Modifier,
     initialValue: Float = 1f,
     strokeWidth: Dp = 8.dp
@@ -106,10 +97,6 @@ fun Timer(
     var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
-
-
-
-
     // Animation state for button
     var activeButton by rememberSaveable {
         mutableStateOf(ButtonState.Play)
@@ -119,8 +106,8 @@ fun Timer(
         transitionSpec = { tween(500)}) { state ->
         when (state) {
             ButtonState.Pause -> yellow
-            ButtonState.Restart -> green
-            else -> green
+            ButtonState.Restart -> green2
+            else -> green2
         }
     }
     val buttonCornerDp by buttonTransition.animateDp(label = "Button Shape",
@@ -138,26 +125,21 @@ fun Timer(
             else -> 80.dp
         }
     }
-
-    val color = remember { Animatable(Color.Green) }
+    // animate color of arc
+    val color = remember { Animatable(green1) }
     var colorChange by rememberSaveable {
-        mutableStateOf(false)
-    }
-    // animate to green/red based on `button click`
+        mutableStateOf(false) }
     LaunchedEffect(colorChange) {
         if (currentTime > 0) {
             color.animateTo(
                 if (isTimerRunning) Color.Red else color.value,
                 animationSpec = tween(
-                    durationMillis = totalTime.toInt()
+                    durationMillis = 2*totalTime.toInt()
                 )
             )
         }
-        else{
-            Log.wtf(Tag, "In else = ${color.value}")
-            color.animateTo(Color.Green, animationSpec = tween(1000))
-            Log.wtf(Tag, "In else = ${color.value}")
-        }
+        else color.animateTo(Color.Green, animationSpec = tween(1000))
+
     }
 
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -166,7 +148,7 @@ fun Timer(
             currentTime -= 100L
             value = currentTime / totalTime.toFloat()
         } else {
-            colorChange = !colorChange
+            colorChange = false
             activeButton = ButtonState.Restart
         }
     }
@@ -256,7 +238,6 @@ fun TimerScreen(onInputClick: () -> Unit) {
         onInputClick = onInputClick,
         totalTime = 10L * 1000L,
         inactiveBarColor = Color.DarkGray,
-        activeBarColor = ring1,
         modifier = Modifier.size(300.dp),
         strokeWidth = 10.dp
     )
@@ -273,25 +254,10 @@ fun InputScreen(onInputClick: () -> Unit) {
             modifier = Modifier
                 .padding(40.dp),
             onClick = { onInputClick() },
-            colors = ButtonDefaults.buttonColors(backgroundColor = ring1)
+            colors = ButtonDefaults.buttonColors(backgroundColor = orange)
         )
         {
             Text(text = "Back")
         }
     }
-}
-/*
-
-@Preview("Input Screen")
-@Composable
-fun Preview_Input() {
-    InputScreen(onInputClick = {  })
-}
-
-*/
-
-@Preview("Main Screen")
-@Composable
-fun Preview_Timer() {
-    TimerScreen(onInputClick = {  })
 }
