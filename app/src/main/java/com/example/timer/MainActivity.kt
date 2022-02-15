@@ -244,20 +244,3 @@ fun TimerScreen(onInputClick: () -> Unit) {
 }
 
 
-@Composable
-fun InputScreen(onInputClick: () -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Input Layout Space", fontWeight = FontWeight.Bold, color = yellow)
-        Button(
-            modifier = Modifier
-                .padding(40.dp),
-            onClick = { onInputClick() },
-            colors = ButtonDefaults.buttonColors(backgroundColor = orange)
-        )
-        {
-            Text(text = "Back")
-        }
-    }
-}
