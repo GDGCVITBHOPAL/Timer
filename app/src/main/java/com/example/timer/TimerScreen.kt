@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.timer.inTimeFormat
 import com.example.timer.ui.theme.*
 import kotlinx.coroutines.delay
 
@@ -140,7 +141,7 @@ fun Timer(
                 )
             }
             ClickableText(
-                text = AnnotatedString((currentTime / 1000L).toString()),
+                text = AnnotatedString((inTimeFormat(currentTime))),
                 onClick = { onInputClick() },
                 style = TextStyle(
                     fontSize = 44.sp,
