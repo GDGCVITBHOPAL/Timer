@@ -94,7 +94,7 @@ fun InputScreen(onInputClick: (inputTime: Long) -> Unit, currentTime: Long) {
                 modifier = Modifier
                     .padding(20.dp)
                     .size(80.dp),
-                onClick = { },
+                onClick = { onInputClick(currentTime) },
                 shape = CircleShape,
                 contentPadding = PaddingValues(0.dp),
                 colors = ButtonDefaults.buttonColors(
