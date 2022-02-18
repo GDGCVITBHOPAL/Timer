@@ -24,8 +24,8 @@
 
 ### Tech Stack used :
 
-* **Kotlin** (Official Language for Android)
-* **Jetpack Compose**(Android’s modern toolkit for building native UI)
+* **Kotlin** (Official Language for Android) -> https://kotlinlang.org/docs/home.html
+* **Jetpack Compose**(Android’s modern toolkit for building native UI) -> https://developer.android.com/jetpack/compose/documentation
 
 ###  Screenshots
 <details>
