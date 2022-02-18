@@ -31,9 +31,9 @@
 <details>
      <summary> Click to expand </summary>
   
-   Screen Splash               |   Timer End Initial               |  End State Change              | Starting Screen           |  Half completion
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/end%20state%20initial.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/End%20state%20change.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/starting%20screen.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/half%20completion.png)|
+   Application logo               |   Screen Splash               | Starting Screen           |  Half completion    |   Timer End Initial               |  End State Change
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/icon.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/screen%20splash.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/starting%20screen.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/half%20completion.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/end%20state%20initial.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/End%20state%20change.png)|
   
   
 </details>  
