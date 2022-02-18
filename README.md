@@ -10,7 +10,7 @@
 
 <a href="https://drive.google.com/file/d/1-KU44Gr25xNvlOn5Tj0U7CN3NGXkCtT1/view?usp=sharing"><h4 align="center">Download the APK here</h4></a>
 
-**Timer** is an android application. It counts down from a specified time interval given by user.
+**Timer** is an android application. It counts down from a specified time interval given by user. Screenshots showing the functioning of application have been provided below.
 
 ## Table of Contents 
 
@@ -27,7 +27,7 @@
 * **Kotlin** (Official Language for Android) -> https://kotlinlang.org/docs/home.html
 * **Jetpack Compose**(Android’s modern toolkit for building native UI) -> https://developer.android.com/jetpack/compose/documentation
 
-###  Screenshots
+###  Screenshots :
 <details>
      <summary> Click to expand </summary>
   
