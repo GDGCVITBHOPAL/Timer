@@ -6,9 +6,9 @@
   </a>
 </p>
 
-<a href="https://drive.google.com/file/d/1L6K0lpbNQMh7UQ36tWBovA1l_xnhiwgU/view"><h3 align="center">Video Demo of the app in action</h4></a>
+<a href="https://drive.google.com/file/d/1OdSTdUYf52VnBtCD2vmuxJuPOe0LtAQw/view"><h3 align="center">Video Demo of the app in action</h4></a>
 
-<a href="https://github.com/woinbo/Dreave/blob/main/apk/app-release.apk"><h4 align="center">Download the APK here</h4></a>
+<a href="https://drive.google.com/file/d/1-KU44Gr25xNvlOn5Tj0U7CN3NGXkCtT1/view?usp=sharing"><h4 align="center">Download the APK here</h4></a>
 
 **Timer** is an android application. It counts down from a specified time interval given by user.
 
