@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/DSCVITBHOPAL/Timer">
-    <img alt="Timer" title="Timer" src="https://cdn0.iconfinder.com/data/icons/ios7-essence/22/stopwatch_timer_clock_time-512.png" width="150">
+    <img alt="Timer" title="Timer" src="https://user-images.githubusercontent.com/97695341/154756449-da640708-3009-41a6-aad7-3d25b4febd91.gif" width="450">
   </a>
 </p>
 
@@ -31,8 +31,8 @@
 <details>
      <summary> Click to expand </summary>
   
-   Timer End Initial               |  End State Change              | Starting Screen           |  Half completion
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+   Screen Splash               |   Timer End Initial               |  End State Change              | Starting Screen           |  Half completion
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/end%20state%20initial.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/End%20state%20change.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/starting%20screen.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/half%20completion.png)|
   
   
