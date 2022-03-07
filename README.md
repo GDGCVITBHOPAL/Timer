@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/DSCVITBHOPAL/Timer">
-    <img alt="Timer" title="Timer" src="https://cdn0.iconfinder.com/data/icons/ios7-essence/22/stopwatch_timer_clock_time-512.png" width="150">
+    <img alt="Timer" title="Timer" src="https://user-images.githubusercontent.com/97695341/154756449-da640708-3009-41a6-aad7-3d25b4febd91.gif" width="450">
   </a>
 </p>
 
@@ -10,7 +10,7 @@
 
 <a href="https://drive.google.com/file/d/1-KU44Gr25xNvlOn5Tj0U7CN3NGXkCtT1/view?usp=sharing"><h4 align="center">Download the APK here</h4></a>
 
-**Timer** is an android application. It counts down from a specified time interval given by user.
+**Timer** is an android application. It counts down from a specified time interval given by user. Screenshots showing the functioning of application have been provided below.
 
 ## Table of Contents 
 
@@ -27,13 +27,13 @@
 * **Kotlin** (Official Language for Android) -> https://kotlinlang.org/docs/home.html
 * **Jetpack Compose**(Android’s modern toolkit for building native UI) -> https://developer.android.com/jetpack/compose/documentation
 
-###  Screenshots
+###  Screenshots :
 <details>
      <summary> Click to expand </summary>
   
-   Timer End Initial               |  End State Change              | Starting Screen           |  Half completion
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/end%20state%20initial.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/End%20state%20change.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/starting%20screen.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/half%20completion.png)|
+   Application logo               |   Screen Splash               | Starting Screen           |  Half completion    |   Timer End Initial               |  End State Change
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/icon.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/screen%20splash.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/starting%20screen.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/half%20completion.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/end%20state%20initial.png)|![](https://github.com/Apoorva57/Timer/blob/Apoorva57/Images/End%20state%20change.png)|
   
   
 </details>  
