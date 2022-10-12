@@ -24,10 +24,12 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.timer.Selection
 import com.example.timer.inTimeFormat
 import com.example.timer.ui.theme.*
 import kotlinx.coroutines.delay
@@ -61,6 +63,7 @@ fun Timer(
     var activeButton by rememberSaveable {
         mutableStateOf(ButtonState.Play)
     }
+
     val buttonTransition = updateTransition(targetState = activeButton, label = "Button Animation")
     val buttonColor by buttonTransition.animateColor(label = "Button Color",
         transitionSpec = { tween(500) }) { state ->
@@ -89,6 +92,7 @@ fun Timer(
     val color = remember { Animatable(green1) }
     var colorChange by rememberSaveable {
         mutableStateOf(false) }
+
     LaunchedEffect(colorChange) {
         if (currentTime > 0) {
             color.animateTo(
@@ -151,9 +155,12 @@ fun Timer(
             )
         }
         Spacer(modifier = Modifier.height(140.dp))
+
+        Row(modifier = Modifier.align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+
         Button(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+
                 .size(height = 80.dp, width = buttonWidthDp),
             onClick = {
                 if (currentTime <= 0L) {
@@ -162,6 +169,7 @@ fun Timer(
                     colorChange = true
 
                 } else {
+
                     isTimerRunning = !isTimerRunning
                     colorChange = !colorChange
 
@@ -188,5 +196,39 @@ fun Timer(
                 else Icons.Filled.Refresh
             )
         }
+            if(isTimerRunning && currentTime > 0L) {
+            Button(
+                modifier = Modifier
+                    .size(height = 80.dp, width = 80.dp).padding(horizontal = 5.dp),
+                onClick = {
+
+                    currentTime = totalTime
+                    value = 1f
+                    isTimerRunning = false
+
+                },
+                contentPadding = PaddingValues(0.dp),
+
+                shape = RoundedCornerShape(buttonCornerDp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = buttonColor
+                )
+            ) {
+                Icon(
+                    tint = background1,
+                    modifier = Modifier.size(50.dp),
+                    contentDescription = if (isTimerRunning && currentTime > 0L) "Pause"
+                    else if (!isTimerRunning && currentTime >= 0L) "Play"
+                    else "Restart",
+                    imageVector =  Icons.Filled.Refresh
+                )
+            }
+            }
+        }
     }
+}
+@Preview(showSystemUi = true)
+@Composable
+fun preview_function() {
+    Timer(onInputClick = {  }, totalTime = 10, inactiveBarColor = Color.Gray)
 }
