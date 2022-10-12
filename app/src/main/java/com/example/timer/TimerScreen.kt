@@ -217,9 +217,7 @@ fun Timer(
                 Icon(
                     tint = background1,
                     modifier = Modifier.size(50.dp),
-                    contentDescription = if (isTimerRunning && currentTime > 0L) "Pause"
-                    else if (!isTimerRunning && currentTime >= 0L) "Play"
-                    else "Restart",
+                    contentDescription = "Restart",
                     imageVector =  Icons.Filled.Refresh
                 )
             }
