@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
@@ -56,6 +57,7 @@ fun Timer(
     var currentTime by rememberSaveable {
         mutableStateOf(totalTime)
     }
+
     var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
@@ -94,16 +96,20 @@ fun Timer(
         mutableStateOf(false) }
 
     LaunchedEffect(colorChange) {
-        if (currentTime > 0) {
-            color.animateTo(
-                if (isTimerRunning) Color.Red else color.value,
-                animationSpec = tween(
-                    durationMillis = 2*totalTime.toInt()
+
+        if (currentTime > 0  ) {
+
+            if(isTimerRunning)
+                color.animateTo(
+                    targetValue =  Color.Red ,
+                    animationSpec = tween(
+                        durationMillis = 2*totalTime.toInt()
+                    )
                 )
-            )
+            else
+                color.animateTo(Color.Green)
         }
         else color.animateTo(Color.Green, animationSpec = tween(1000))
-
     }
 
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -165,9 +171,10 @@ fun Timer(
             onClick = {
                 if (currentTime <= 0L) {
                     currentTime = totalTime
-                    isTimerRunning = true
-                    colorChange = true
+                    isTimerRunning = false
+                    value = 1f
 
+                    colorChange = true
                 } else {
 
                     isTimerRunning = !isTimerRunning
@@ -201,12 +208,11 @@ fun Timer(
                 modifier = Modifier
                     .size(height = 80.dp, width = 80.dp).padding(horizontal = 5.dp),
                 onClick = {
-
                     currentTime = totalTime
-                    value = 1f
                     isTimerRunning = false
-
-                },
+                    value = 1f
+                    colorChange = !colorChange
+                          },
                 contentPadding = PaddingValues(0.dp),
 
                 shape = RoundedCornerShape(buttonCornerDp),
