@@ -58,6 +58,10 @@ fun Timer(
         mutableStateOf(totalTime)
     }
 
+    var isReset by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
@@ -97,14 +101,16 @@ fun Timer(
 
     LaunchedEffect(colorChange) {
 
-        if (currentTime > 0  ) {
+        if (currentTime > 0 ) {
 
-            if(isTimerRunning)
+            if(!isReset)
+
                 color.animateTo(
-                    targetValue =  Color.Red ,
+                    targetValue =  if(isTimerRunning) Color.Red else color.value,
                     animationSpec = tween(
                         durationMillis = 2*totalTime.toInt()
                     )
+
                 )
             else
                 color.animateTo(Color.Green)
@@ -172,15 +178,18 @@ fun Timer(
                 if (currentTime <= 0L) {
                     currentTime = totalTime
                     isTimerRunning = false
+                    isReset = true
                     value = 1f
 
                     colorChange = true
                 } else {
 
                     isTimerRunning = !isTimerRunning
+                    isReset = false
                     colorChange = !colorChange
 
                 }
+
                 activeButton = if (isTimerRunning && currentTime > 0L) ButtonState.Pause
                 else ButtonState.Play
 
@@ -211,6 +220,7 @@ fun Timer(
                     currentTime = totalTime
                     isTimerRunning = false
                     value = 1f
+                    isReset = true
                     colorChange = !colorChange
                           },
                 contentPadding = PaddingValues(0.dp),
