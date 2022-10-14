@@ -12,18 +12,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.timer.ui.theme.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             MyApp()
         }
     }
 }
-
-
 
 
 @Composable
@@ -39,8 +39,9 @@ fun MyApp() {
         ) {
             if (currentScreen == Screen.Input) {
                 InputScreen(onInputClick = {
-                                            currentScreen = Screen.Timer
-                                            time = it}, time)
+                    currentScreen = Screen.Timer
+                    time = it
+                }, time)
             } else TimerScreen(onInputClick = { currentScreen = Screen.Input }, time = time)
         }
 
