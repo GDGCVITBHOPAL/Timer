@@ -6,11 +6,12 @@
   </a>
 </p>
 
-<a href="https://drive.google.com/file/d/1OdSTdUYf52VnBtCD2vmuxJuPOe0LtAQw/view"><h3 align="center">Video Demo of the app in action</h4></a>
+Video Demo of the app in action: https://drive.google.com/file/d/1OdSTdUYf52VnBtCD2vmuxJuPOe0LtAQw/view
 
-<a href="https://drive.google.com/file/d/1-KU44Gr25xNvlOn5Tj0U7CN3NGXkCtT1/view?usp=sharing"><h4 align="center">Download the APK here</h4></a>
+Download the APK here: https://drive.google.com/file/d/1-KU44Gr25xNvlOn5Tj0U7CN3NGXkCtT1/view?usp=sharing
 
-**Timer** is an android application. It counts down from a specified time interval given by user. Screenshots showing the functioning of application have been provided below.
+**Timer** is an android application. It counts down from a specified time interval given by user. Screenshots showing the functioning of application have been provided below.<br>
+Note: Do Sync Project with Gradle Files in order to have local.properties file in the code (if not there already) for proper functioning of app as it holds the SDK location.
 
 ## Table of Contents 
 
