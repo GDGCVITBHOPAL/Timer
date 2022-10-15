@@ -4,16 +4,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_icon_1s_231px"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_icon_1s_231px"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Timer">
+        android:theme="@style/Theme.Timer.Starting">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Timer.NoActionBar">
+            android:theme="@style/Theme.Timer.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,5 +20,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
