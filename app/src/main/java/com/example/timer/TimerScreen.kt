@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
@@ -24,10 +25,12 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.timer.Selection
 import com.example.timer.inTimeFormat
 import com.example.timer.ui.theme.*
 import kotlinx.coroutines.delay
@@ -54,6 +57,11 @@ fun Timer(
     var currentTime by rememberSaveable {
         mutableStateOf(totalTime)
     }
+
+    var isReset by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
@@ -61,6 +69,7 @@ fun Timer(
     var activeButton by rememberSaveable {
         mutableStateOf(ButtonState.Play)
     }
+
     val buttonTransition = updateTransition(targetState = activeButton, label = "Button Animation")
     val buttonColor by buttonTransition.animateColor(label = "Button Color",
         transitionSpec = { tween(500) }) { state ->
@@ -89,17 +98,24 @@ fun Timer(
     val color = remember { Animatable(green1) }
     var colorChange by rememberSaveable {
         mutableStateOf(false) }
+
     LaunchedEffect(colorChange) {
-        if (currentTime > 0) {
-            color.animateTo(
-                if (isTimerRunning) Color.Red else color.value,
-                animationSpec = tween(
-                    durationMillis = 2*totalTime.toInt()
+
+        if (currentTime > 0 ) {
+
+            if(!isReset)
+
+                color.animateTo(
+                    targetValue =  if(isTimerRunning) Color.Red else color.value,
+                    animationSpec = tween(
+                        durationMillis = 2*totalTime.toInt()
+                    )
+
                 )
-            )
+            else
+                color.animateTo(Color.Green)
         }
         else color.animateTo(Color.Green, animationSpec = tween(1000))
-
     }
 
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -151,21 +167,29 @@ fun Timer(
             )
         }
         Spacer(modifier = Modifier.height(140.dp))
+
+        Row(modifier = Modifier.align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+
         Button(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+
                 .size(height = 80.dp, width = buttonWidthDp),
             onClick = {
                 if (currentTime <= 0L) {
                     currentTime = totalTime
-                    isTimerRunning = true
-                    colorChange = true
+                    isTimerRunning = false
+                    isReset = true
+                    value = 1f
 
+                    colorChange = true
                 } else {
+
                     isTimerRunning = !isTimerRunning
+                    isReset = false
                     colorChange = !colorChange
 
                 }
+
                 activeButton = if (isTimerRunning && currentTime > 0L) ButtonState.Pause
                 else ButtonState.Play
 
@@ -188,5 +212,37 @@ fun Timer(
                 else Icons.Filled.Refresh
             )
         }
+            if(isTimerRunning && currentTime > 0L) {
+            Button(
+                modifier = Modifier
+                    .size(height = 80.dp, width = 80.dp).padding(horizontal = 5.dp),
+                onClick = {
+                    currentTime = totalTime
+                    isTimerRunning = false
+                    value = 1f
+                    isReset = true
+                    colorChange = !colorChange
+                          },
+                contentPadding = PaddingValues(0.dp),
+
+                shape = RoundedCornerShape(buttonCornerDp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = buttonColor
+                )
+            ) {
+                Icon(
+                    tint = background1,
+                    modifier = Modifier.size(50.dp),
+                    contentDescription = "Restart",
+                    imageVector =  Icons.Filled.Refresh
+                )
+            }
+            }
+        }
     }
+}
+@Preview(showSystemUi = true)
+@Composable
+fun preview_function() {
+    Timer(onInputClick = {  }, totalTime = 10, inactiveBarColor = Color.Gray)
 }
