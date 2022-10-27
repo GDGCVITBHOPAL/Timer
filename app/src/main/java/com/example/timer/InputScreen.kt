@@ -40,14 +40,14 @@ fun InputScreen(onInputClick: (inputTime: Long) -> Unit, currentTime: Long) {
             Selection(modifier = Modifier,
                 digit = addZero(hours),
                 unit = "h",
-                onIncClick = { hours++ },
-                onDecClick = { if (hours > 0L) hours-- })
+                onDecClick = { hours++ },
+                onIncClick = { if (hours > 0L) hours-- })
 
             // Minutes
             Selection(modifier = Modifier,
                 digit = addZero(minutes),
                 unit = "m",
-                onIncClick = {
+                onDecClick = {
                     if (minutes <= 59L) {
                         if (minutes == 59L) {
                             minutes = 0L
@@ -55,7 +55,7 @@ fun InputScreen(onInputClick: (inputTime: Long) -> Unit, currentTime: Long) {
                             minutes++
                     }
                 },
-                onDecClick = {
+                onIncClick = {
                     if (minutes >= 0L) {
                         if (minutes == 0L) {
                             minutes = 59L
@@ -69,7 +69,7 @@ fun InputScreen(onInputClick: (inputTime: Long) -> Unit, currentTime: Long) {
             Selection(modifier = Modifier,
                 digit = addZero(seconds),
                 unit = "s",
-                onIncClick = {
+                onDecClick = {
                     if (seconds <= 59L) {
                         if (seconds == 59L) {
                             seconds = 0L
@@ -77,7 +77,7 @@ fun InputScreen(onInputClick: (inputTime: Long) -> Unit, currentTime: Long) {
                             seconds++
                     }
                 },
-                onDecClick = {
+                onIncClick = {
                     if (seconds >= 0L) {
                         if (seconds == 0L) {
                             seconds = 59L
